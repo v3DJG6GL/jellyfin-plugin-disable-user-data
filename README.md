@@ -44,11 +44,19 @@ What this plugin does **not** do: Modify any data or metadata in any way at all,
 
 ## Client compatibility
 
-As far as I've seen, this works fine on Jellyfin Web (browsers), Jellyfin Media Player (PCs), official Jellyfin client for Android TV, Wholphin (also for Android TV), jellyfin on Android and Findroid on Android. I haven't been able to test on other platforms, but these APIs are common and I don't expect there to be much of an issue.
+Because it's server-wide, this is expected to work across clients. This has been concretely tested on Jellyfin Web (browser), Jellyfin Media Player (desktop), official Jellyfin client for Android TV, Wholphin (also for Android TV), Jellyfin on Android and Findroid on Android. I haven't been able to test on other platforms, but these APIs are common and I don't expect there to be much of an issue.
 
 ## Installation
 
+1. Add a new repository to Jellyfin with the following URL:
 
+    ```
+    https://raw.githubusercontent.com/pelluch/jellyfin-plugins/refs/heads/main/manifest.json
+    ```
+
+    And any name you like (e.g. pelluch Plugins).
+2. Reload the plugins page, and select the "Disable User Data" plugins from the list of available ones
+3. Restart the server (note you need to configure it before it does anything)
 
 ## Configuration
 
