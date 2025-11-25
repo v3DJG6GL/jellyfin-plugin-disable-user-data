@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Jellyfin.Plugin.DisableUserData.Configuration;
 using MediaBrowser.Controller.Entities;
 using MediaBrowser.Controller.Library;
 using Microsoft.AspNetCore.Http;
@@ -22,22 +23,20 @@ public sealed class DisableUserDataActionFilter : IAsyncActionFilter
         ActionExecutingContext context,
         ActionExecutionDelegate next)
     {
-        var plugin = Plugin.Instance;
-        if (plugin is null || !plugin.Configuration.Enabled)
+        var config = Plugin.Instance?.Configuration;
+        if (config is null || !config.Enabled)
         {
             await next();
             return;
         }
 
         var request = context.HttpContext.Request;
-        Console.WriteLine($"Disable UserData - {context.Controller}");
-        Console.WriteLine($"Disable UserData - {request.Path}");
 
         // This if is mostly for short-circuiting purposes
-        if (DisabledForCollections(context, request)
-            || DisabledForContinueWatching(context, request)
-            || DisabledForNextUp(context, request)
-            || DisabledForRecentlyAdded(context, request))
+        if (DisabledForCollections(config, context, request)
+            || DisabledForContinueWatching(config, context, request)
+            || DisabledForNextUp(config, context, request)
+            || DisabledForRecentlyAdded(config, context, request))
         {
             await next();
             return;
@@ -46,9 +45,12 @@ public sealed class DisableUserDataActionFilter : IAsyncActionFilter
         await next();
     }
 
-    private bool DisabledForCollections(ActionExecutingContext context, HttpRequest request)
+    private bool DisabledForCollections(
+        PluginConfiguration config,
+        ActionExecutingContext context,
+        HttpRequest request)
     {
-        if (!Plugin.Instance.Configuration.DisableOnCollections)
+        if (config.DisableOnCollections)
         {
             return false;
         }
@@ -78,9 +80,12 @@ public sealed class DisableUserDataActionFilter : IAsyncActionFilter
         return false;
     }
 
-    private bool DisabledForContinueWatching(ActionExecutingContext context, HttpRequest request)
+    private bool DisabledForContinueWatching(
+        PluginConfiguration config,
+        ActionExecutingContext context,
+        HttpRequest request)
     {
-        if (!Plugin.Instance.Configuration.DisableOnContinueWatching)
+        if (config.DisableOnContinueWatching)
         {
             return false;
         }
@@ -94,9 +99,12 @@ public sealed class DisableUserDataActionFilter : IAsyncActionFilter
         return false;
     }
 
-    private bool DisabledForNextUp(ActionExecutingContext context, HttpRequest request)
+    private bool DisabledForNextUp(
+        PluginConfiguration config,
+        ActionExecutingContext context,
+        HttpRequest request)
     {
-        if (!Plugin.Instance.Configuration.DisableOnNextUp)
+        if (config.DisableOnNextUp)
         {
             return false;
         }
@@ -110,9 +118,12 @@ public sealed class DisableUserDataActionFilter : IAsyncActionFilter
         return false;
     }
 
-    private bool DisabledForRecentlyAdded(ActionExecutingContext context, HttpRequest request)
+    private bool DisabledForRecentlyAdded(
+        PluginConfiguration config,
+        ActionExecutingContext context,
+        HttpRequest request)
     {
-        if (!Plugin.Instance.Configuration.DisableOnRecentlyAdded)
+        if (config.DisableOnRecentlyAdded)
         {
             return false;
         }
