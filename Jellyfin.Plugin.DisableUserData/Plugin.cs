@@ -51,8 +51,6 @@ public class Plugin : BasePlugin<PluginConfiguration>, IHasWebPages
                         var controllerName = cad.ControllerTypeInfo.FullName;
                         var methodName = cad.MethodInfo.Name;
 
-                        // Console.WriteLine($"Disable UserData: Checking for {controllerName} - {methodName}");
-
                         if (controllerName == null)
                         {
                             return false;
@@ -63,17 +61,17 @@ public class Plugin : BasePlugin<PluginConfiguration>, IHasWebPages
                     });
 
                 _logger.LogInformation(
-                    "Disable UserData: attached DisableUserDataActionFilter to {Count} actions",
+                    "Disable User Data: attached DisableUserDataActionFilter to {Count} actions",
                     count);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Disable UserData: failed to attach action filter");
+                _logger.LogError(ex, "Disable User Data: failed to attach action filter");
             }
         });
     }
 
-    public override string Name => "Disable UserData";
+    public override string Name => "Disable User Data";
 
     public override Guid Id => Guid.Parse("b24c5930-c337-4e0f-977f-1d900629ad09");
 
@@ -87,6 +85,4 @@ public class Plugin : BasePlugin<PluginConfiguration>, IHasWebPages
             new PluginPageInfo { Name = Name, EmbeddedResourcePath = string.Format(CultureInfo.InvariantCulture, "{0}.Configuration.configPage.html", GetType().Namespace) }
         ];
     }
-
-
 }

@@ -24,7 +24,7 @@ public sealed class DisableUserDataActionFilter : IAsyncActionFilter
         ActionExecutionDelegate next)
     {
         var config = Plugin.Instance?.Configuration;
-        if (config is null || !config.Enabled)
+        if (config is null)
         {
             await next();
             return;
