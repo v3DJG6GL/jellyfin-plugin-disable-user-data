@@ -4,13 +4,21 @@ namespace Jellyfin.Plugin.DisableUserData.Configuration;
 
 public class PluginConfiguration : BasePluginConfiguration
 {
+
     public PluginConfiguration()
     {
+        DisableOnAllItems = false;
         DisableOnCollections = false;
         DisableOnNextUp = false;
         DisableOnContinueWatching = false;
         DisableOnRecentlyAdded = false;
     }
+
+    /// <summary>
+    /// Disable User Data for any Items endpoints.
+    /// (GetItems + GetItemsByUserIdLegacy).
+    /// </summary>
+    public bool DisableOnAllItems { get; set; }
 
     /// <summary>
     /// Disable User Data for collections on Items endpoints.
@@ -35,4 +43,13 @@ public class PluginConfiguration : BasePluginConfiguration
     /// (GetResumeItemsLegacy + GetResumeItems).
     /// </summary>
     public bool DisableOnRecentlyAdded { get; set; }
+
+    public override string ToString()
+    {
+        return $"{nameof(DisableOnAllItems)}: {DisableOnAllItems}, " +
+               $"{nameof(DisableOnCollections)}: {DisableOnCollections}, " +
+               $"{nameof(DisableOnContinueWatching)}: {DisableOnContinueWatching}, " +
+               $"{nameof(DisableOnNextUp)}: {DisableOnNextUp}, " +
+               $"{nameof(DisableOnRecentlyAdded)}: {DisableOnRecentlyAdded}";
+    }
 }

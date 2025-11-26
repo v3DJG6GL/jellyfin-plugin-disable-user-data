@@ -60,13 +60,12 @@ public class Plugin : BasePlugin<PluginConfiguration>, IHasWebPages
                                && methodNames.Contains(methodName);
                     });
 
-                _logger.LogInformation(
-                    "Disable User Data: attached DisableUserDataActionFilter to {Count} actions",
-                    count);
+                _logger.LogInformation("Attached DisableUserDataActionFilter to {Count} actions", count);
+                _logger.LogInformation("Plugin configuration: {Configuration}", Configuration);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Disable User Data: failed to attach action filter");
+                _logger.LogError(ex, "Failed to attach action filter");
             }
         });
     }

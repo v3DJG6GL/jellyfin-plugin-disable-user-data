@@ -13,7 +13,28 @@
     <div data-role="content">
         <div class="content-primary">
             <form id="DisableUserDataConfigForm">
-                <h3>Collection endpoints</h3>
+                <h3>Items endpoints</h3>
+
+                <div class="fieldDescription">
+                   This is essentially any calls to /Items or /User/{user_id}/Items APIs
+                </div>
+
+                <div class="checkboxContainer checkboxContainer-withDescription">
+                    <label class="emby-checkbox-label">
+                        <input id="DisableOnAllItems"
+                               name="DisableOnAllItems"
+                               type="checkbox"
+                               is="emby-checkbox" />
+                        <span>Disable User Data for ALL item folders</span>
+                    </label>
+                    <div class="fieldDescription">
+                        When checked, UserData is disabled for any <code>GetItems</code> and <code>GetItemsByUserIdLegacy</code>
+                        queries. This encompasses a large portion of all views and media types so use with caution, knowing that
+                        user-related data won't be present in them. Should be used mostly for testing.
+
+                        This will override any individual checkboxes under this "Items endpoints" header (i.e. Collections right now).
+                    </div>
+                </div>
 
                 <div class="checkboxContainer checkboxContainer-withDescription">
                     <label class="emby-checkbox-label">
@@ -90,6 +111,9 @@
                 Dashboard.showLoadingMsg();
                 ApiClient.getPluginConfiguration(DisableUserDataConfig.pluginUniqueId)
                     .then(function (config) {
+                        document.querySelector('#DisableOnAllItems').checked =
+                            config.DisableOnAllItems === undefined ? false : config.DisableOnAllItems;
+
                         document.querySelector('#DisableOnCollections').checked =
                             config.DisableOnCollections === undefined ? false : config.DisableOnCollections;
 
@@ -111,6 +135,7 @@
                 Dashboard.showLoadingMsg();
                 ApiClient.getPluginConfiguration(DisableUserDataConfig.pluginUniqueId)
                     .then(function (config) {
+                        config.DisableOnAllItems = document.querySelector('#DisableOnAllItems').checked;
                         config.DisableOnCollections = document.querySelector('#DisableOnCollections').checked;
                         config.DisableOnContinueWatching = document.querySelector('#DisableOnContinueWatching').checked;
                         config.DisableOnNextUp = document.querySelector('#DisableOnNextUp').checked;
