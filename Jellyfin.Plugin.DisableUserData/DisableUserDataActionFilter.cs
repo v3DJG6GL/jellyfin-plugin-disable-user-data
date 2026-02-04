@@ -62,7 +62,7 @@ public sealed class DisableUserDataActionFilter : IAsyncActionFilter
         if (request.Path.ToString().EndsWith("/Items", StringComparison.InvariantCultureIgnoreCase) && config.DisableOnAllItems)
         {
             DisableUserData(context);
-            _logger.LogInformation("Disabling UserData for folder at path {Path}", request.Path);
+            _logger.LogDebug("Disabling UserData for folder at path {Path}", request.Path);
             return true;
         }
 
@@ -85,7 +85,7 @@ public sealed class DisableUserDataActionFilter : IAsyncActionFilter
             includeItemTypes.Contains("BoxSet"))
         {
             DisableUserData(context);
-            _logger.LogInformation("Disabling UserData for collections folder at path {Path}", request.Path);
+            _logger.LogDebug("Disabling UserData for collections folder at path {Path}", request.Path);
             return true;
         }
 
@@ -98,7 +98,7 @@ public sealed class DisableUserDataActionFilter : IAsyncActionFilter
             if (parent is CollectionFolder)
             {
                 DisableUserData(context);
-                _logger.LogInformation("Disabling UserData for CollectionFolder with collections at path {Path}", request.Path);
+                _logger.LogDebug("Disabling UserData for CollectionFolder with collections at path {Path}", request.Path);
                 return true;
             }
         }
@@ -119,7 +119,7 @@ public sealed class DisableUserDataActionFilter : IAsyncActionFilter
         if (request.Path.ToString().EndsWith("/Resume", StringComparison.InvariantCultureIgnoreCase))
         {
             DisableUserData(context);
-            _logger.LogInformation("Disabling UserData for Continue Watching at path {Path}", request.Path);
+            _logger.LogDebug("Disabling UserData for Continue Watching at path {Path}", request.Path);
             return true;
         }
 
@@ -139,7 +139,7 @@ public sealed class DisableUserDataActionFilter : IAsyncActionFilter
         if (request.Path.ToString().EndsWith("/NextUp", StringComparison.InvariantCultureIgnoreCase))
         {
             DisableUserData(context);
-            _logger.LogInformation("Disabling UserData for Next Up at path {Path}", request.Path);
+            _logger.LogDebug("Disabling UserData for Next Up at path {Path}", request.Path);
             return true;
         }
 
@@ -159,7 +159,7 @@ public sealed class DisableUserDataActionFilter : IAsyncActionFilter
         if (request.Path.ToString().EndsWith("/Latest", StringComparison.InvariantCultureIgnoreCase))
         {
             DisableUserData(context);
-            _logger.LogInformation("Disabling UserData for Recently Added at path {Path}", request.Path);
+            _logger.LogDebug("Disabling UserData for Recently Added at path {Path}", request.Path);
             return true;
         }
 
@@ -180,7 +180,7 @@ public sealed class DisableUserDataActionFilter : IAsyncActionFilter
         if (request.Path.ToString().EndsWith("/Seasons", StringComparison.InvariantCultureIgnoreCase))
         {
             DisableUserData(context);
-            _logger.LogInformation("Disabling UserData for Seasons at path {Path}", request.Path);
+            _logger.LogDebug("Disabling UserData for Seasons at path {Path}", request.Path);
             return true;
         }
         
